@@ -1,0 +1,1 @@
+rootProject.name = "KMP_Module_Generator"
