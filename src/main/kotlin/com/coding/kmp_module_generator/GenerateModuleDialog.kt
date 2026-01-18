@@ -9,7 +9,7 @@ import javax.swing.JPanel
 import javax.swing.JTextField
 
 class GenerateModuleDialog(project: Project): DialogWrapper(project) {
-    private val panel = JPanel(VerticalLayout(10))
+    private val panel = JPanel(VerticalLayout(15))
     private val nameField = JTextField()
     private val packageField = JTextField("com.example")
 

@@ -5,6 +5,9 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
+import com.intellij.openapi.project.guessProjectDir
+import com.intellij.psi.PsiDirectory
+import com.intellij.psi.PsiManager
 
 internal class GenerateModuleAction : AnAction() {
     override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
@@ -19,5 +22,6 @@ internal class GenerateModuleAction : AnAction() {
         val project = e.project ?: return
         val g = GenerateModuleDialog(project)
         g.showAndGet()
+        generate(project, project.guessProjectDir()!!)
     }
 }

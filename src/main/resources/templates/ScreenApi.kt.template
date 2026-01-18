@@ -1,0 +1,7 @@
+package {{package}}.{{FeatureName}}_api
+
+import cafe.adriel.voyager.core.screen.Screen
+
+interface {{FeatureName}}Api {
+    fun {{FeatureName}}(): Screen
+}
