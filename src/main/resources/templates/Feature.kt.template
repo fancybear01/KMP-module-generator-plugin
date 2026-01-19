@@ -1,0 +1,33 @@
+package {{package}}.{{feature_name}}_impl.{{feature_name}}
+
+import androidx.compose.runtime.Composable
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.compose.{{FeatureName}}Content
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi.{{FeatureName}}Action
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi.{{FeatureName}}Event
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi.{{FeatureName}}State
+import {{package}}.mvi_koin_voyager.MviView
+import {{package}}.mvi_koin_voyager.collectEvent
+import kotlinx.coroutines.flow.Flow
+import org.koin.compose.koinInject
+
+internal class {{FeatureName}} : MviView<{{FeatureName}}Action, {{FeatureName}}Event, {{FeatureName}}State> {
+
+    @Composable
+    override fun content(
+        state: {{FeatureName}}State,
+        eventFlow: Flow<{{FeatureName}}Event>,
+        pushAction: ({{FeatureName}}Action) -> Unit
+    ) {
+        val navigator = LocalNavigator.currentOrThrow
+
+        eventFlow.collectEvent { event ->
+            when (event) {
+
+            }
+        }
+
+        {{FeatureName}}Content()
+    }
+}

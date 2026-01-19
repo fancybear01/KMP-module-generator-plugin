@@ -1,0 +1,5 @@
+package {{package}}.{{feature_name}}.features.{{feature_name}}.impl.screens.{{feature_name}}.mvi
+
+import {{package}}.{{feature_name}}.common.mvi.general.MviState
+
+internal data object {{FeatureName}}State : MviState

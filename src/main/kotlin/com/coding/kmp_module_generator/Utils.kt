@@ -5,27 +5,12 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import java.io.File
 
-fun String.toFolderName(): String {
+fun String.toLowerName(isFolder: Boolean): String {
     val sb = StringBuilder()
     for (c in this) {
         if (c.isUpperCase()) {
             if (sb.isNotEmpty()) {
-                sb.append("_")
-            }
-            sb.append(c.lowercaseChar())
-        } else {
-            sb.append(c)
-        }
-    }
-    return sb.toString()
-}
-
-fun String.toModuleName(): String {
-    val sb = StringBuilder()
-    for (c in this) {
-        if (c.isUpperCase()) {
-            if (sb.isNotEmpty()) {
-                sb.append("-")
+                sb.append(if (isFolder) "_" else "-")
             }
             sb.append(c.lowercaseChar())
         } else {

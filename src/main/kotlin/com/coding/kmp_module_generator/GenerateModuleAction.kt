@@ -27,12 +27,19 @@ internal class GenerateModuleAction : AnAction() {
             val packageName = generateModuleDialog.getPackageName()
 
             val projectDir = project.guessProjectDir()!!
-            val featureDir = projectDir.createChildDirectory(null, "feature")
-            val moduleDir = featureDir.createChildDirectory(null, "feature-${moduleName.toModuleName()}")
+            val featureDir = projectDir.createChildDirectory(null, "features")
+            val moduleDir = featureDir.createChildDirectory(null, moduleName.toLowerName(isFolder = false))
 
             val generatorApi = ApiModuleGenerator(project)
 
             generatorApi.generateModuleStructure(
+                moduleDir = moduleDir,
+                moduleName = moduleName,
+                packageName = packageName
+            )
+
+            val generatorImpl = ImplModuleGenerator(project)
+            generatorImpl.generateModuleStructure(
                 moduleDir = moduleDir,
                 moduleName = moduleName,
                 packageName = packageName

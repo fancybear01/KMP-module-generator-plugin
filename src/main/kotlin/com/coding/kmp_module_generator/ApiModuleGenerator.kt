@@ -11,7 +11,7 @@ class ApiModuleGenerator(private val project: Project) {
         packageName: String
     ) {
 
-        val moduleDirApi = moduleDir.createChildDirectory(null, "${moduleName.toModuleName()}-api")
+        val moduleDirApi = moduleDir.createChildDirectory(null, "${moduleName.toLowerName(isFolder = false)}-api")
 
         val srcDir = moduleDirApi.createChildDirectory(null, "src")
         val commonMainDir = srcDir.createChildDirectory(null, "commonMain")
@@ -27,12 +27,12 @@ class ApiModuleGenerator(private val project: Project) {
         generateFile(
             project = project,
             currentDir = currentDir,
-            templateFile = File("C:\\kotlin\\plugins\\KMP Module Generator\\src\\main\\resources\\templates\\ScreenApi.kt.template"),
-            fileName = "ScreenApi.kt",
+            templateFile = File("C:\\kotlin\\plugins\\KMP Module Generator\\src\\main\\resources\\templates\\FeatureApi.kt.template"),
+            fileName = "${moduleName}Api.kt",
             values = mapOf(
                 "package" to packageName,
                 "FeatureName" to moduleName,
-                "feature_name" to moduleName.toFolderName()
+                "feature_name" to moduleName.toLowerName(isFolder = true)
             )
         )
 
@@ -43,7 +43,7 @@ class ApiModuleGenerator(private val project: Project) {
             fileName = "build.gradle.kts",
             values = mapOf(
                 "package" to packageName,
-                "feature_name" to moduleName.toFolderName()
+                "feature_name" to moduleName.toLowerName(isFolder = true)
             )
         )
     }

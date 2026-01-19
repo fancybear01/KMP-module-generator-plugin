@@ -1,0 +1,5 @@
+package {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi
+
+import {{package}}.mvi_general.MviEvent
+
+internal sealed interface {{FeatureName}}{{Type}} : Mvi{{Type}}

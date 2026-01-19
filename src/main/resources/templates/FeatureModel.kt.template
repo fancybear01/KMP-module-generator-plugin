@@ -1,0 +1,32 @@
+package {{package}}.{{feature_name}}_impl.{{feature_name}}
+
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi.{{FeatureName}}Action
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi.{{FeatureName}}Effect
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi.{{FeatureName}}Event
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.mvi.{{FeatureName}}State
+import {{package}}.mvi_koin_voyager.MviModel
+
+internal class {{FeatureName}}Model(
+    tag: String
+) : MviModel<{{FeatureName}}Action, {{FeatureName}}Effect, {{FeatureName}}Event, {{FeatureName}}State>(
+    defaultState = {{FeatureName}}State,
+    tag = tag,
+) {
+    override suspend fun bootstrap() {
+
+    }
+
+    override suspend fun actor(action: {{FeatureName}}Action) {
+        when (action) {
+
+        }
+    }
+
+    override fun reducer(
+        effect: {{FeatureName}}Effect,
+        previousState: {{FeatureName}}State
+    ): {{FeatureName}}State =
+        when (effect) {
+
+        }
+}

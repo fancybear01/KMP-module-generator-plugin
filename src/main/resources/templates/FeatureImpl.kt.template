@@ -1,0 +1,9 @@
+package {{package}}.{{feature_name}}_impl
+
+import cafe.adriel.voyager.core.screen.Screen
+import {{package}}.{{feature_name}}_api.{{FeatureName}}Api
+import {{package}}.{{feature_name}}_impl.main_screen.MainScreen
+
+internal class {{FeatureName}}Impl : {{FeatureName}}Api {
+    override fun {{featureName}}(): Screen = {{FeatureName}}()
+}
