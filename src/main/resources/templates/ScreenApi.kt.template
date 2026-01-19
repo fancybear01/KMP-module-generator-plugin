@@ -1,4 +1,4 @@
-package {{package}}.{{FeatureName}}_api
+package {{package}}.{{feature_name}}_api
 
 import cafe.adriel.voyager.core.screen.Screen
 

@@ -1,13 +1,10 @@
 package com.coding.kmp_module_generator
 
-import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileTypes.FileTypeRegistry
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
-import com.intellij.psi.PsiManager
 import java.io.File
 
 object TemplateLoader {
@@ -38,30 +35,6 @@ object TemplateLoader {
             )
             val psiFile = directory.add(file) as? PsiFile
             psiFile?.viewProvider?.document?.setText(content)
-        } catch (e: Exception) {
-            println("Error: ${e.message}")
-        }
-    }
-}
-
-fun getOrCreateSubDir(parent: PsiDirectory, name: String): PsiDirectory {
-    return parent.findSubdirectory(name) ?: parent.createSubdirectory(name)
-}
-
-fun generate(project: Project, baseDir: VirtualFile) {
-    val psiManager = PsiManager.getInstance(project)
-    val basePsiDir = psiManager.findDirectory(baseDir) ?: return
-
-    WriteCommandAction.runWriteCommandAction(project) {
-        try {
-            val myDir = getOrCreateSubDir(basePsiDir, "feature")
-
-            val content = TemplateLoader.generateFromTemplate(
-                File("C:\\kotlin\\plugins\\KMP Module Generator\\src\\main\\resources\\templates\\ScreenApi.kt.template"),
-                mapOf("package" to "com.coding", "FeatureName" to "Muuu")
-            )
-
-            TemplateLoader.createPsiFile(project, myDir, "Api.kt", content)
         } catch (e: Exception) {
             println("Error: ${e.message}")
         }

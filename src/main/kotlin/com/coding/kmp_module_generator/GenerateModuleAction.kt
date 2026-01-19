@@ -4,10 +4,8 @@ import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.project.DumbAwareAction
+import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.guessProjectDir
-import com.intellij.psi.PsiDirectory
-import com.intellij.psi.PsiManager
 
 internal class GenerateModuleAction : AnAction() {
     override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
@@ -20,8 +18,25 @@ internal class GenerateModuleAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
-        val g = GenerateModuleDialog(project)
-        g.showAndGet()
-        generate(project, project.guessProjectDir()!!)
+        val generateModuleDialog = GenerateModuleDialog(project)
+        generateModuleDialog.showAndGet()
+
+        WriteCommandAction.runWriteCommandAction(project) {
+
+            val moduleName = generateModuleDialog.getModuleName()
+            val packageName = generateModuleDialog.getPackageName()
+
+            val projectDir = project.guessProjectDir()!!
+            val featureDir = projectDir.createChildDirectory(null, "feature")
+            val moduleDir = featureDir.createChildDirectory(null, "feature-${moduleName.toModuleName()}")
+
+            val generatorApi = ApiModuleGenerator(project)
+
+            generatorApi.generateModuleStructure(
+                moduleDir = moduleDir,
+                moduleName = moduleName,
+                packageName = packageName
+            )
+        }
     }
 }
