@@ -3,5 +3,5 @@ package {{package}}.{{feature_name}}_api
 import cafe.adriel.voyager.core.screen.Screen
 
 interface {{FeatureName}}Api {
-    fun {{FeatureName}}(): Screen
+    fun {{featureName}}(): Screen
 }

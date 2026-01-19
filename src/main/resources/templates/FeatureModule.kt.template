@@ -1,8 +1,8 @@
 package {{package}}.{{feature_name}}_impl
 
-import {{package}}.{{feature_name}}_api.MainScreenApi
-import {{package}}.{{feature_name}}_impl.main_screen.MainScreen
-import {{package}}.{{feature_name}}_impl.main_screen.MainScreenModel
+import {{package}}.{{feature_name}}_api.{{FeatureName}}Api
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.{{FeatureName}}
+import {{package}}.{{feature_name}}_impl.{{feature_name}}.{{FeatureName}}Model
 import {{package}}.mvi_koin_voyager.provideMviModel
 import org.koin.dsl.module
 

@@ -32,6 +32,7 @@ class ApiModuleGenerator(private val project: Project) {
             values = mapOf(
                 "package" to packageName,
                 "FeatureName" to moduleName,
+                "featureName" to moduleName.replaceFirstChar { it.lowercaseChar() },
                 "feature_name" to moduleName.toLowerName(isFolder = true)
             )
         )
