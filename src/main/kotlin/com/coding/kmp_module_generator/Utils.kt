@@ -80,3 +80,10 @@ fun showNotification(project: Project?, title: String, content: String, type: No
     }
     Notifications.Bus.notify(notification, project)
 }
+
+fun VirtualFile.createChildDirectoryIfNotExists(
+    requestor: Any?,
+    name: String
+): VirtualFile {
+    return this.findChild(name) ?: this.createChildDirectory(requestor, name)
+}
