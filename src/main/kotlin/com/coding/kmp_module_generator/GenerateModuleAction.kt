@@ -47,6 +47,12 @@ internal class GenerateModuleAction : AnAction() {
                         packageName = packageName
                     )
 
+                    addModulesToSettings(
+                        project = project,
+                        projectDir = projectDir,
+                        moduleName = moduleName
+                    )
+
                     showNotification(
                         project = project,
                         title = "KMP Module Generator",

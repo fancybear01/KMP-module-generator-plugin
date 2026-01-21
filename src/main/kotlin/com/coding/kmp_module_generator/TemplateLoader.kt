@@ -5,14 +5,19 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
-import java.io.File
 
 object TemplateLoader {
+    fun loadTemplate(resourcePath: String): String {
+        val stream = this::class.java.classLoader.getResourceAsStream(resourcePath)
+            ?: error("Template '$resourcePath' not found in resources")
+        return stream.bufferedReader().use { it.readText() }
+    }
+
     fun generateFromTemplate(
-        templateFile: File,
+        templateContent: String,
         values: Map<String, String>
     ) : String {
-        var content = templateFile.readText()
+        var content = templateContent
         for ((key, value) in values) {
             content = content.replace("{{$key}}", value)
         }

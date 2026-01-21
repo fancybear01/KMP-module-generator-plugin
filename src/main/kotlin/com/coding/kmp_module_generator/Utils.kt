@@ -4,10 +4,12 @@ import com.intellij.notification.Notification
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
+import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.findFile
+import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiManager
-import java.io.File
 
 private const val NOTIFICATION_GROUP_ID = "GenerateModuleAction.Notifications"
 
@@ -37,15 +39,11 @@ fun String.toLowerName(isFolder: Boolean): String {
 fun generateFile(
     project: Project,
     currentDir: VirtualFile,
-    templateFile: File,
+    templatePath: String,
     fileName: String,
     values: Map<String, String>
 ) {
     require(fileName.isNotBlank()) { "fileName cannot be blank" }
-    if (!templateFile.exists()) {
-        showNotification(project, "File generation failed", "Template file ${templateFile.name} not found", NotificationType.ERROR)
-        return
-    }
 
     val psiManager = PsiManager.getInstance(project)
     val basePsiDir = psiManager.findDirectory(currentDir)
@@ -59,8 +57,9 @@ fun generateFile(
     }
 
     try {
+        val templateContent = TemplateLoader.loadTemplate(templatePath)
         val content = TemplateLoader.generateFromTemplate(
-            templateFile = templateFile,
+            templateContent = templateContent,
             values = values
         )
 
@@ -86,4 +85,24 @@ fun VirtualFile.createChildDirectoryIfNotExists(
     name: String
 ): VirtualFile {
     return this.findChild(name) ?: this.createChildDirectory(requestor, name)
+}
+
+fun addModulesToSettings(
+    project: Project,
+    projectDir: VirtualFile,
+    moduleName: String
+) {
+    try {
+        val settingsFile = projectDir.findFile("settings.gradle.kts") ?: return
+        val documentManager = FileDocumentManager.getInstance()
+        val document = documentManager.getDocument(settingsFile) ?: return
+        val modulePath = ":features:${moduleName.toLowerName(isFolder = false)}:${moduleName.toLowerName(isFolder = false)}"
+        val lineToAddApi = "include(\"${modulePath}-api\")\n"
+        val lineToAddImpl = "include(\"${modulePath}-impl\")\n"
+        document.insertString(document.textLength, lineToAddApi)
+        document.insertString(document.textLength, lineToAddImpl)
+        documentManager.saveDocument(document)
+    } catch (e: Exception) {
+        showNotification(project, "settngs.gradle.kts", "No modules added to settngs.gradle.kts", NotificationType.WARNING)
+    }
 }
